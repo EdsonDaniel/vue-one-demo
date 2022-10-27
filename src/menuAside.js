@@ -14,6 +14,42 @@ import {
 
 export default [
   {
+    to: "/tables",
+    icon: mdiMonitor,
+    label: "Mis Capturas",
+  },
+  {
+    to: "/forms",
+    icon: mdiMonitor,
+    label: "Capturar promociones",
+  },
+  {
+    to: "/profile",
+    icon: mdiMonitor,
+    label: "Promociones MKS",
+  },
+  {
+    to: "/dashboard",
+    icon: mdiMonitor,
+    label: "Todas las capturas",
+  },
+  {
+    to: "/dashboard",
+    icon: mdiMonitor,
+    label: "Usuarios",
+  },
+  {
+    to: "/dashboard",
+    icon: mdiMonitor,
+    label: "Permisos",
+  },
+  {
+    to: "/profile",
+    icon: mdiMonitor,
+    label: "Mi Perfil",
+  },
+
+  /*{
     to: "/dashboard",
     icon: mdiMonitor,
     label: "Dashboard",
@@ -48,6 +84,7 @@ export default [
     label: "Profile",
     icon: mdiAccountCircle,
   },
+  
   {
     to: "/login",
     label: "Login",
@@ -76,4 +113,5 @@ export default [
     icon: mdiGithub,
     target: "_blank",
   },
+  */
 ];
