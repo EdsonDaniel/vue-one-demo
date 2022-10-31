@@ -1,6 +1,8 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Style from "@/views/StyleView.vue";
+//import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
+//import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
+import { useMainStore } from "@/stores/main.js";
 
 const routes = [
   {
@@ -67,9 +69,10 @@ const routes = [
   {
     meta: {
       title: "Login",
+      notRequiresAuth: true
     },
     path: "/login",
-    name: "login",
+    name: "Login",
     component: () => import("@/views/LoginView.vue"),
   },
   {
@@ -83,11 +86,29 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  //history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 };
   },
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.notRequiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    next()
+    
+  } else {
+    if (useMainStore.userName == null) {
+      //next({ name: 'Login' })
+      return '/login';
+    } else {
+      next() // go to wherever I'm going
+    }
+  }
+
 });
 
 /*router.beforeEach(async (to) => {
@@ -100,6 +121,8 @@ const router = createRouter({
       auth.returnUrl = to.fullPath;
       return '/login';
   }
-});
-*/
+});*/
+
+
+
 export default router;
