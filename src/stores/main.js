@@ -7,6 +7,9 @@ export const useMainStore = defineStore("main", {
     userName: null,
     userEmail: null,
     userAvatar: null,
+    numComprador: null,
+    rol: null,
+    nomCto:null,
 
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
@@ -14,6 +17,7 @@ export const useMainStore = defineStore("main", {
     /* Sample data (commonly used) */
     clients: [],
     history: [],
+    numProm: null,
   }),
   actions: {
     setUser(payload) {
@@ -25,6 +29,15 @@ export const useMainStore = defineStore("main", {
       }
       if (payload.avatar) {
         this.userAvatar = payload.avatar;
+      }
+      if(payload.rol){
+        this.rol = payload.rol;
+      }
+      if(payload.nomCto){
+        this.nomCto = payload.nomCto;
+      }
+      if(payload.numComprador){
+        this.numComprador = payload.numComprador;
       }
     },
 
@@ -42,3 +55,5 @@ export const useMainStore = defineStore("main", {
     },
   },
 });
+
+export const baseUrl = 'http://localhost/promocionesycombos/api/';

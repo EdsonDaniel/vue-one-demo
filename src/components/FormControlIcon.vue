@@ -1,7 +1,8 @@
 <script setup>
 import BaseIcon from "@/components/BaseIcon.vue";
+import { computed } from "vue";
 
-defineProps({
+const props = defineProps({
   icon: {
     type: String,
     default: null,
@@ -10,6 +11,18 @@ defineProps({
     type: String,
     default: null,
   },
+  side: {
+    type: String,
+    default: null
+  }
+});
+
+const inputElClass = computed(() => {
+  const base = [
+    "absolute top-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400",
+    props.side ? "right-0" : "left-0"
+  ];
+  return base;
 });
 </script>
 
@@ -18,6 +31,6 @@ defineProps({
     :path="icon"
     w="w-10"
     :h="h"
-    class="absolute top-0 left-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
+    :class="inputElClass"
   />
 </template>

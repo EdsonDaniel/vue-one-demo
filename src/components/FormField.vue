@@ -1,7 +1,7 @@
 <script setup>
 import { computed, useSlots } from "vue";
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     default: null,
@@ -14,6 +14,16 @@ defineProps({
     type: String,
     default: null,
   },
+
+  wrapClass:{
+    type: String,
+    default: null,
+  },
+
+  otherClasses:{
+    type: String,
+    default: null,
+  },
 });
 
 const slots = useSlots();
@@ -22,20 +32,40 @@ const wrapperClass = computed(() => {
   const base = [];
   const slotsLength = slots.default().length;
 
-  if (slotsLength > 1) {
-    base.push("grid grid-cols-1 gap-3");
+  if(props.wrapClass === "row"){
+    base.push("flex flex-row gap-3");
+  }
+  else{
+    if (slotsLength > 1) {
+      //base.push("grid grid-cols-1 gap-3");
+      base.push("grid grid-cols-4 gap-3");
+    }
+    if (slotsLength === 3) {
+      base.push("md:grid-cols-3");
+    }
+    if (slotsLength === 2) {
+      base.push("md:grid-cols-2");
+    }
+    if (slotsLength === 4) {
+      base.push("md:grid-cols-4");
+    }
+
+    /*if (slotsLength === 5) {
+      base.push("md:grid-cols-5");
+    }*/
   }
 
-  if (slotsLength === 2) {
-    base.push("md:grid-cols-2");
-  }
+  return base;
+});
 
+const parentClases = computed(() => {
+  const base = [" last:mb-0", props.otherClasses ? props.otherClasses : ""];
   return base;
 });
 </script>
 
 <template>
-  <div class="mb-6 last:mb-0">
+  <div :class="parentClases">
     <label v-if="label" :for="labelFor" class="block font-bold mb-2">{{
       label
     }}</label>

@@ -12,7 +12,7 @@ import {
 } from "@mdi/js";
 
 export default [
-  {
+  /*{
     icon: mdiMenu,
     label: "Sample menu",
     menu: [
@@ -32,11 +32,11 @@ export default [
         label: "Item Last",
       },
     ],
-  },
+  },*/  
   {
     isCurrentUser: true,
     menu: [
-      {
+      /*{
         icon: mdiAccount,
         label: "My Profile",
         to: "/profile",
@@ -52,10 +52,12 @@ export default [
       {
         isDivider: true,
       },
+      */
       {
         icon: mdiLogout,
-        label: "Log Out",
+        label: "Cerrar sesión",
         isLogout: true,
+        href: "/login"
       },
     ],
   },
@@ -65,16 +67,19 @@ export default [
     isDesktopNoLabel: true,
     isToggleLightDark: true,
   },
+  /*
   {
     icon: mdiGithub,
     label: "GitHub",
     isDesktopNoLabel: true,
     href: "https://github.com/justboil/admin-one-vue-tailwind",
   },
+  */
   {
     icon: mdiLogout,
-    label: "Log out",
+    label: "Cerrar sesión",
     isDesktopNoLabel: true,
     isLogout: true,
+    href: "/login"
   },
 ];

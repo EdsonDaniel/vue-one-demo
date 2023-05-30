@@ -14,14 +14,14 @@ import {
 
 export default [
   {
-    to: "/tables",
+    to: "/mis-capturas",
     icon: mdiMonitor,
     label: "Mis Capturas",
   },
   {
-    to: "/forms",
+    to: "/capturar",
     icon: mdiMonitor,
-    label: "Capturar promociones",
+    label: "Capturar",
   },
   {
     to: "/profile",
@@ -29,10 +29,19 @@ export default [
     label: "Promociones MKS",
   },
   {
-    to: "/dashboard",
+    to: "/capturas",
     icon: mdiMonitor,
     label: "Todas las capturas",
   },
+
+  {
+    to: "/prom-aut",
+    icon: mdiMonitor,
+    label: "Para Autorizar",
+  },
+
+  //Segunda version
+  /*
   {
     to: "/dashboard",
     icon: mdiMonitor,
@@ -48,6 +57,11 @@ export default [
     icon: mdiMonitor,
     label: "Mi Perfil",
   },
+
+
+  */
+
+  //fin segunda version
 
   /*{
     to: "/dashboard",

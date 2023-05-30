@@ -16,15 +16,49 @@ const props = defineProps({
     type: String,
     default: "info",
   },
+  buttons: {
+    type: String,
+    default: "danger",
+  },
   buttonLabel: {
     type: String,
-    default: "Done",
+    default: "Aceptar",
   },
   hasCancel: Boolean,
+  hasButton: Boolean,
   modelValue: {
     type: [String, Number, Boolean],
     default: null,
   },
+  widthAuto: {
+    type: Boolean,
+    default: null
+  },
+  hasFooter: {
+    type: Boolean,
+    default: true
+  },
+  titleClass:{
+    type: String,
+    default: null
+  },
+  blocked:{
+    type: Boolean,
+    default: false
+  }
+});
+
+const inputElClass = computed(() => {
+  const base = ["shadow-lg max-h-modal z-50",
+    props.widthAuto ? "w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12": "w-auto"
+  ];
+  return base;
+});
+
+const titleAddClass = computed(() => {
+  const base = [ props.titleClass ? props.titleClass : ""
+  ];
+  return base;
 });
 
 const emit = defineEmits(["update:modelValue", "cancel", "confirm"]);
@@ -43,21 +77,24 @@ const confirm = () => confirmCancel("confirm");
 
 const cancel = () => confirmCancel("cancel");
 
+const overlayClick = () => props.blocked ? "" : cancel();
+
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && value.value) {
+  if (e.key === "Escape" && value.value && !props.blocked) {
+    //console.log("tipo", props.blocked)
     cancel();
   }
 });
 </script>
 
 <template>
-  <OverlayLayer v-show="value" @overlay-click="cancel">
+  <OverlayLayer v-show="value" @overlay-click="overlayClick">
     <CardBox
       v-show="value"
-      class="shadow-lg max-h-modal w-11/12 md:w-3/5 lg:w-2/5 xl:w-4/12 z-50"
+      :class="inputElClass"
       is-modal
     >
-      <CardBoxComponentTitle :title="title">
+      <CardBoxComponentTitle :title="title" :titleClass="titleClass">
         <BaseButton
           v-if="hasCancel"
           :icon="mdiClose"
@@ -72,14 +109,14 @@ window.addEventListener("keydown", (e) => {
         <slot />
       </div>
 
-      <template #footer>
+      <template v-if="hasFooter" #footer>
         <BaseButtons>
-          <BaseButton :label="buttonLabel" :color="button" @click="confirm" />
+          <BaseButton v-if="hasButton"
+          :label="buttonLabel" :color="button" @click="confirm" />
           <BaseButton
+            color="danger"
             v-if="hasCancel"
-            label="Cancel"
-            :color="button"
-            outline
+            label="Cancelar"
             @click="cancel"
           />
         </BaseButtons>

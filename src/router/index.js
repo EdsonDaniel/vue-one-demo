@@ -10,11 +10,11 @@ const routes = [
       title: "Select style",
     },
     path: "/",
-    name: "dashboard",
-    component: Home,
-    //name: "login",
+    //name: "dashboard",
+    //component: Home,
+    name: "login",
     //component: Style,
-    //component: () => import("@/views/LoginView.vue"),
+    component: () => import("@/views/LoginView.vue"),
   },
   {
     // Document title tag
@@ -26,13 +26,21 @@ const routes = [
     name: "style",
     component: Home,
   },
-  {
+  /*{
     meta: {
       title: "Tables",
     },
     path: "/tables",
     name: "tables",
     component: () => import("@/views/TablesView.vue"),
+  },*/
+  {
+    meta: {
+      title: "Mis Capturas",
+    },
+    path: "/mis-capturas",
+    name: "miscapturas",
+    component: () => import("@/views/MisCapturas.vue"),
   },
   {
     meta: {
@@ -83,6 +91,66 @@ const routes = [
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
   },
+
+  {
+    meta: {
+      title: "Capturar",
+    },
+    path: "/capturar",
+    name: "capturar",
+    component: () => import("@/views/CapturarView.vue"),
+  },
+
+  {
+    meta: {
+      title: "Todas las Capturas",
+      permiso: 3 // permiso solo para jefes de cpr y mkt 
+    },
+    path: "/capturas",
+    name: "capturas",
+    component: () => import("@/views/TodasLasCapturas.vue"),
+  },
+
+  {
+    meta: {
+      title: "Detalle de Promoción",
+      //permiso: 3 // permiso solo para jefes de cpr y mkt 
+    },
+    path: "/detalle-prom",
+    name: "detalle",
+    component: () => import("@/views/DetallePromocion.vue"),
+  },
+
+  {
+    meta: {
+      title: "Editar Promoción",
+      //permiso: 3 // permiso solo para jefes de cpr y mkt 
+    },
+    path: "/editar-prom",
+    name: "editar",
+    component: () => import("@/views/EditarView.vue"),
+  },
+
+
+  {
+    meta: {
+      title: "Promociones para autorizar",
+      //permiso: 3 // permiso solo para jefes de cpr y mkt 
+    },
+    path: "/prom-aut",
+    name: "prom-autorizar",
+    component: () => import("@/views/ParaAutorizar.vue"),
+  },
+
+  {
+    meta: {
+      title: "Autorizar Promoción",
+      //permiso: 3 // permiso solo para jefes de cpr y mkt 
+    },
+    path: "/autorizar",
+    name: "autorizar",
+    component: () => import("@/views/AutorizarPromocion.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -95,21 +163,45 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const user = useMainStore();
+  //console.log("next route", to, to.permiso)
   if (to.matched.some((record) => record.meta.notRequiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
+    //console.log("record no required auth")
     next()
     
   } else {
-    if (useMainStore.userName == null) {
-      //next({ name: 'Login' })
-      return '/login';
+    //console.log("record si required auth", from)
+    //console.log(next)
+    if (user.userName == null) {
+      //console.log("AL LOGIN")
+      next({ name: 'Login' })
     } else {
-      next() // go to wherever I'm going
+      //console.log("A LA SIG RUTA",  to.meta.permiso === true)
+
+      if (to.meta.permiso){ 
+        //console.log(user)
+        //console.log(user.rol)
+        //console.log(to,"to", to.name)  
+        if(user.rol <= to.meta.permiso){
+          //console.log("si tiene permiso", from)  
+          next() // go to wherever I'm going
+        }else{
+          //console.log("sin permiso", from)
+          //console.log(user.rol)
+          //console.log(to.meta.permiso)
+          next(from)
+          //return
+        }
+      }else{
+        next()
+      }
     }
   }
 
 });
+
 
 /*router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page

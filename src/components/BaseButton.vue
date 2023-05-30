@@ -46,6 +46,15 @@ const props = defineProps({
   active: Boolean,
   disabled: Boolean,
   roundedFull: Boolean,
+
+  //Propiedades agregadas
+  otherClasses:{
+    type:String,
+    default: null
+  },
+  alto:String,
+  ancho:String,
+  title:String
 });
 
 const is = computed(() => {
@@ -90,6 +99,7 @@ const componentClass = computed(() => {
     "border",
     props.roundedFull ? "rounded-full" : "rounded",
     getButtonColor(props.color, props.outline, !props.disabled, props.active),
+    props.otherClasses ? props.otherClasses : ""
   ];
 
   if (!props.label && props.icon) {
@@ -112,7 +122,7 @@ const componentClass = computed(() => {
 </script>
 
 <template>
-  <component
+  <component @click="$emit('clickevent')"
     :is="is"
     :class="componentClass"
     :href="href"
@@ -120,8 +130,9 @@ const componentClass = computed(() => {
     :to="to"
     :target="target"
     :disabled="disabled"
+    :title="title"
   >
-    <BaseIcon v-if="icon" :path="icon" :size="iconSize" />
+    <BaseIcon v-if="icon" :path="icon" :size="iconSize" :w="ancho" :h="alto"/>
     <span v-if="label" :class="labelClass">{{ label }}</span>
   </component>
 </template>

@@ -17,6 +17,9 @@ const props = defineProps({
   isForm: Boolean,
   isHoverable: Boolean,
   isModal: Boolean,
+
+  //Propiedades agreagadas
+  hasHeader:Boolean
 });
 
 const emit = defineEmits(["submit"]);
@@ -45,6 +48,7 @@ const submit = (event) => {
 </script>
 
 <template>
+  <!--<slot v-if="hasHeader" name="header"/>-->
   <component
     :is="isForm ? 'form' : 'div'"
     :class="componentClass"

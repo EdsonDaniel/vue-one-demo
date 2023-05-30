@@ -1,5 +1,5 @@
 <script setup>
-import { mdiCog } from "@mdi/js";
+import { mdiCog, mdiArrowLeftCircle  } from "@mdi/js";
 import { useSlots, computed } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
@@ -15,6 +15,9 @@ defineProps({
     required: true,
   },
   main: Boolean,
+  hasBack:String,
+  alto:String,
+  ancho:String,
 });
 
 const hasSlot = computed(() => useSlots().default);
@@ -26,6 +29,9 @@ const hasSlot = computed(() => useSlots().default);
     class="mb-6 flex items-center justify-between"
   >
     <div class="flex items-center justify-start">
+      <BaseButton v-if="hasBack" :icon="mdiArrowLeftCircle" 
+        color="whiteDark" title="Atrás" :to="hasBack"
+        :ancho="ancho"  :alto="alto" iconSize="60" otherClasses="mr-5"/>
       <IconRounded
         v-if="icon && main"
         :icon="icon"
